@@ -1,0 +1,173 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{% if server_settings.title %}{{ server_settings.title }} | {% endif %}Status{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'ophix_client_management/css/client_management.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans "Home" %}</a>
+    &rsaquo; Status
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="token-policy-header">
+    <div class="token-policy-legend">
+        <span class="legend-item"><span class="legend-dot ok"></span> OK (&lt;{{ warn_days }}d)</span>
+        <span class="legend-item"><span class="legend-dot warn"></span> Warning ({{ warn_days }}–{{ require_days }}d)</span>
+        <span class="legend-item"><span class="legend-dot require"></span> Rotation Required ({{ require_days }}–{{ lockout_days }}d)</span>
+        <span class="legend-item"><span class="legend-dot locked"></span> Locked (&gt;{{ lockout_days }}d)</span>
+        <span class="legend-item"><span class="legend-dot unlocked"></span> Unlocked — Rotation Required</span>
+        <span class="legend-item"><span class="legend-dot never"></span> Never Rotated</span>
+        <span class="legend-item"><span class="legend-dot requested"></span> Operator Requested</span>
+    </div>
+
+    <div class="token-policy-bulk">
+        <form method="post" action="{% url 'client_management_request_all_overdue' %}">
+            {% csrf_token %}
+            <input type="submit" class="button" value="Request Rotation — All Overdue">
+        </form>
+    </div>
+</div>
+
+{% if rows %}
+<div class="token-search-wrap">
+    <input type="text" id="client-search" placeholder="Filter by client name…" autocomplete="off">
+    <span class="search-count" id="search-count"></span>
+</div>
+<table class="token-table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Host</th>
+            <th>Version</th>
+            <th class="bar-cell">Token Age</th>
+            <th class="status-cell">Status</th>
+            <th class="action-cell">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr data-client="{{ row.client.name|lower }}">
+            <td>
+                <a href="{% url 'admin:ophix_core_client_change' row.client.pk %}">{{ row.client.name }}</a>
+            </td>
+            <td>{{ row.client.host.name }}</td>
+            <td>
+                {% if row.client_version %}
+                <span class="version-cell">
+                    {% if row.version_state %}<span class="version-dot {{ row.version_state }}">●</span>{% endif %}{{ row.client_version }}
+                </span>
+                {% else %}
+                <span class="version-none">—</span>
+                {% endif %}
+            </td>
+            <td class="bar-cell">
+                <div class="bar-track">
+                    <div class="bar-fill {{ row.state }}" style="width: {{ row.bar_pct }}%"></div>
+                </div>
+            </td>
+            <td class="status-cell">
+                <div class="status-label {{ row.state }}">{{ row.label }}</div>
+                <div class="age-label">
+                    {% if row.age_days is not None %}{{ row.age_days }} day{{ row.age_days|pluralize }}{% endif %}
+                </div>
+            </td>
+            <td class="action-cell">
+                {% if row.state == "locked" %}
+                <form method="post" action="{% url 'client_management_unlock' row.client.pk %}" class="inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="token-action-btn unlock">Unlock Client</button>
+                </form>
+                {% elif row.state == "unlocked" %}
+                <form method="post" action="{% url 'client_management_clear' row.client.pk %}" class="inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="token-action-btn clear">Revoke Override</button>
+                </form>
+                {% elif row.client.rotation_required %}
+                <form method="post" action="{% url 'client_management_clear' row.client.pk %}" class="inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="token-action-btn clear">Clear Request</button>
+                </form>
+                {% else %}
+                <form method="post" action="{% url 'client_management_request' row.client.pk %}" class="inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="token-action-btn request">Request Rotation</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No clients registered.</p>
+{% endif %}
+
+<p class="threshold-note">
+    Thresholds: warn at {{ warn_days }} days &middot; require at {{ require_days }} days &middot; locked at {{ lockout_days }} days.
+    Configure via <code>TOKEN_WARN_DAYS</code>, <code>TOKEN_REQUIRE_DAYS</code>, <code>TOKEN_LOCKOUT_DAYS</code> in <code>.env</code>.
+    Set <code>TOKEN_LOCKOUT_DAYS=0</code> to disable lockout enforcement.
+</p>
+
+{% if version_summary %}
+<div class="version-summary">
+    <h3>Client Version Summary</h3>
+    {% for pkg in version_summary %}
+    <div class="version-summary-package">
+        <div class="version-summary-package-name">{{ pkg.package }}{% if pkg.latest %} <span class="version-summary-latest-label">(Latest: {{ pkg.latest }})</span>{% endif %}</div>
+        {% for row in pkg.rows %}
+        <div class="version-summary-row">
+            {% if row.state == "current" %}
+            <span class="version-dot current">●</span>
+            {% elif row.state == "outdated" %}
+            <span class="version-dot outdated">●</span>
+            {% else %}
+            <span class="version-dot placeholder">●</span>
+            {% endif %}
+            <span class="version-summary-version">{{ row.version }}</span>
+            <span class="version-summary-count">{{ row.count }} client{{ row.count|pluralize }}</span>
+            {% if pkg.latest and row.version == pkg.latest %}
+            <span class="version-summary-latest-tag">(latest)</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% if not pkg.latest %}
+        <div class="check-updates-note">
+            Run <code>check_client_updates</code> to populate latest version.
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("client-search");
+    const searchCount = document.getElementById("search-count");
+    const rows = document.querySelectorAll(".token-table tbody tr");
+    const total = rows.length;
+
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", function() {
+        const q = searchInput.value.trim().toLowerCase();
+        let visible = 0;
+        rows.forEach(function(row) {
+            const show = !q || (row.dataset.client || "").includes(q);
+            row.style.display = show ? "" : "none";
+            if (show) visible++;
+        });
+        searchCount.textContent = q ? (visible + " of " + total) : "";
+    });
+});
+</script>
+
+{% endblock %}

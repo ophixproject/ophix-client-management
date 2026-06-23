@@ -1,0 +1,315 @@
+/* Client Management — Status page */
+
+.token-policy-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5em;
+    flex-wrap: wrap;
+    gap: 0.75em;
+}
+
+.token-policy-legend {
+    display: flex;
+    gap: 1.5em;
+    flex-wrap: wrap;
+    font-size: 0.85em;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-dot.ok       { background: var(--admin-interface-success-color); }
+.legend-dot.warn     { background: var(--admin-interface-warning-color); }
+.legend-dot.require  { background: var(--admin-interface-delete-button-background-color); }
+.legend-dot.locked   { background: var(--admin-interface-delete-button-background-color); }
+.legend-dot.unlocked { background: var(--admin-interface-warning-color); }
+.legend-dot.never    { background: var(--admin-interface-muted-color); }
+.legend-dot.requested { background: var(--admin-interface-warning-color); }
+
+.token-policy-bulk {
+    margin-bottom: 1em;
+}
+
+.token-policy-bulk input[type="submit"] {
+    font-size: 1em;
+}
+
+/* Main table */
+
+.token-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.token-table th {
+    text-align: left;
+    padding: 0.5em 0.75em;
+    border-bottom: 2px solid var(--admin-interface-module-background-color);
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--admin-interface-module-background-color);
+}
+
+[data-theme="dark"] .token-table th {
+    color: var(--admin-interface-generic-link-color);
+    border-bottom-color: var(--admin-interface-generic-link-color);
+}
+
+.token-table td {
+    padding: 0.6em 0.75em;
+    border-bottom: 1px solid var(--darkened-bg, #eee);
+    vertical-align: middle;
+}
+
+.token-table tr:last-child td {
+    border-bottom: none;
+}
+
+.status-cell {
+    min-width: 180px;
+}
+
+.bar-cell {
+    width: 220px;
+}
+
+.action-cell {
+    width: 160px;
+    white-space: nowrap;
+}
+
+/* Token age bar */
+
+.bar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    height: 10px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .bar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.2s;
+}
+
+.bar-fill.ok       { background: var(--admin-interface-success-color); }
+.bar-fill.warn     { background: var(--admin-interface-warning-color); }
+.bar-fill.require  { background: var(--admin-interface-delete-button-background-color); }
+.bar-fill.locked   { background: var(--admin-interface-delete-button-background-color); }
+.bar-fill.unlocked { background: var(--admin-interface-warning-color); }
+.bar-fill.never    { background: var(--admin-interface-muted-color); }
+.bar-fill.requested { background: var(--admin-interface-warning-color); }
+
+/* Status labels */
+
+.status-label {
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-label.ok       { color: var(--admin-interface-success-color); }
+.status-label.warn     { color: var(--admin-interface-warning-color); }
+.status-label.require  { color: var(--admin-interface-delete-button-background-color); }
+.status-label.locked   { color: var(--admin-interface-delete-button-background-color); font-weight: bold; }
+.status-label.unlocked { color: var(--admin-interface-warning-color); font-weight: bold; }
+.status-label.never    { color: var(--admin-interface-muted-color); font-style: italic; }
+.status-label.requested { color: var(--admin-interface-warning-color); font-weight: bold; }
+
+.age-label {
+    font-size: 0.8em;
+    color: var(--admin-interface-muted-color);
+    margin-top: 2px;
+}
+
+/* Version column */
+
+.version-cell {
+    font-family: monospace;
+    font-size: 0.85em;
+}
+
+.version-none {
+    font-size: 0.8em;
+    color: var(--admin-interface-muted-color);
+    font-style: italic;
+}
+
+/* Version dots — inline indicator and summary panel */
+
+.version-dot {
+    font-size: 1.3em;
+    vertical-align: middle;
+    margin-right: 0.3em;
+}
+
+.version-dot.current      { color: var(--admin-interface-success-color); }
+.version-dot.outdated     { color: var(--admin-interface-warning-color); }
+.version-dot.placeholder  { color: transparent; }
+
+/* Action buttons */
+
+.inline-form {
+    display: inline;
+}
+
+.token-action-btn {
+    font-size: var(--admin-interface-button-font-size, 13px);
+    padding: 0.4em 0.75em;
+    border-radius: var(--admin-interface-button-border-radius, 4px);
+    border: 1px solid;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.token-action-btn.request {
+    background: var(--admin-interface-save-button-background-color);
+    border-color: var(--admin-interface-save-button-background-color);
+    color: var(--admin-interface-save-button-text-color);
+}
+
+.token-action-btn.request:hover {
+    background: var(--admin-interface-save-button-background-hover-color);
+    border-color: var(--admin-interface-save-button-background-hover-color);
+}
+
+.token-action-btn.clear {
+    background: var(--admin-interface-save-button-background-color);
+    border-color: var(--admin-interface-save-button-background-color);
+    color: var(--admin-interface-save-button-text-color);
+}
+
+.token-action-btn.clear:hover {
+    background: var(--admin-interface-save-button-background-hover-color);
+    border-color: var(--admin-interface-save-button-background-hover-color);
+}
+
+.token-action-btn.unlock {
+    background: var(--admin-interface-delete-button-background-color);
+    border-color: var(--admin-interface-delete-button-background-color);
+    color: var(--admin-interface-delete-button-text-color);
+}
+
+.token-action-btn.unlock:hover {
+    background: var(--admin-interface-delete-button-background-hover-color);
+    border-color: var(--admin-interface-delete-button-background-hover-color);
+}
+
+/* Search bar */
+
+.token-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    margin-bottom: 0.75em;
+}
+
+#client-search {
+    background-color: var(--body-bg, #fff);
+    color: var(--body-fg);
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 4px;
+    padding: 0.35em 0.6em;
+    font-size: 0.9em;
+    width: 220px;
+}
+
+#client-search:focus {
+    outline: 2px solid var(--admin-interface-generic-link-color);
+    outline-offset: 1px;
+}
+
+.search-count {
+    font-size: 0.8em;
+    color: var(--admin-interface-muted-color);
+}
+
+/* Threshold note */
+
+.threshold-note {
+    font-size: 0.8em;
+    color: var(--admin-interface-muted-color);
+    margin-top: 1.5em;
+}
+
+/* Version summary panel */
+
+.version-summary {
+    margin-top: 2em;
+}
+
+.version-summary h3 {
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--admin-interface-module-background-color);
+    margin-bottom: 0.75em;
+}
+
+[data-theme="dark"] .version-summary h3 {
+    color: var(--admin-interface-generic-link-color);
+}
+
+.version-summary-package {
+    margin-bottom: 1.25em;
+}
+
+.version-summary-package-name {
+    font-family: monospace;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 0.3em;
+}
+
+.version-summary-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 0.85em;
+    padding: 0.15em 0;
+}
+
+.version-summary-version {
+    font-family: monospace;
+    min-width: 14em;
+}
+
+.version-summary-count {
+    color: var(--admin-interface-muted-color);
+}
+
+.version-summary-latest-tag {
+    font-size: 0.8em;
+    color: var(--admin-interface-muted-color);
+    font-style: italic;
+}
+
+.version-summary-latest-label {
+    font-size: 0.8em;
+    font-weight: normal;
+    font-family: monospace;
+    color: var(--admin-interface-muted-color);
+}
+
+.check-updates-note {
+    font-size: 0.8em;
+    color: var(--admin-interface-muted-color);
+    margin-top: 0.2em;
+    padding-left: 1.3em;
+}
