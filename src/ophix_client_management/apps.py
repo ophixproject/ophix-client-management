@@ -12,3 +12,5 @@ class OphixClientManagementConfig(AppConfig):
         from ophix.core.admin import ClientAdmin
         from ophix_client_management.columns import token_status_column
         ClientAdmin.register_column(token_status_column, before_domain=True)
+        from ophix_client_management.admin_fields import token_rotation_display
+        ClientAdmin.register_field_display("last_token_rotation", token_rotation_display)

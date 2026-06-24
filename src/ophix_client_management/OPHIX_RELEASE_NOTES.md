@@ -1,5 +1,12 @@
 # Ophix Client Management Release Notes
 
+## 2026.06.24.01
+
+- Client change view now shows "Last token rotation" as a styled status indicator
+  (OK / Warning / Rotation Required / Requested by Operator / Locked / Never Rotated)
+  with age in days and the raw date beneath it, matching the visual style of the Status
+  dashboard. Requires `ophix-server-base>=2026.06.24.01`.
+
 ## 2026.06.23.01
 
 - Initial release — successor to `ophix-token-policy`.
