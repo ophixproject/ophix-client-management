@@ -1,5 +1,13 @@
 # Ophix Client Management Release Notes
 
+## Unreleased
+
+- Client change view: "Last token rotation" is now a single line — the date renders
+  with the same locale-aware `DATETIME_FORMAT` Django uses when ophix-client-management
+  isn't installed, followed inline by the coloured status label and age (e.g.
+  "31 May 2026, 2:47 p.m.  OK (5 days)"). Previously this was two lines: a coloured
+  status line on top and a plain ISO-style date beneath it.
+
 ## 2026.06.24.01
 
 - Client change view now shows "Last token rotation" as a styled status indicator
