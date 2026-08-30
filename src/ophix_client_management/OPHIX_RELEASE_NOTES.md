@@ -1,6 +1,6 @@
 # Ophix Client Management Release Notes
 
-## Unreleased
+## 2026.08.30.01
 
 - Core > Clients "Token Status" column: all states now render with `font-weight: 600`
   (previously only Locked/Requested were bold, so most rows looked lighter-weight
