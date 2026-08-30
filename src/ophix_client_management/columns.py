@@ -1,5 +1,5 @@
 from django.utils.html import format_html
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, ngettext
 from ophix_client_management.policy import token_state, STATE_LABELS
 
 _STATE_STYLES = {
@@ -16,7 +16,9 @@ def token_status_column(self, obj):
     state, age_days = token_state(obj)
     label = STATE_LABELS[state]
     style = _STATE_STYLES[state]
-    age_str = " ({} days)".format(age_days) if age_days is not None else ""
+    age_str = " ({})".format(
+        ngettext("%(count)d day", "%(count)d days", age_days) % {"count": age_days}
+    ) if age_days is not None else ""
     return format_html('<span style="{}">{}{}</span>', style, label, age_str)
 
 

@@ -1,5 +1,16 @@
 # Ophix Client Management Release Notes
 
+## 2026.08.30.02
+
+- Fixed token-age text ("Warning (1 days)") always using the plural form
+  regardless of count, and never being translatable — three occurrences (Core >
+  Clients "Token Status" column, Client change view's token section, and the
+  Status page table) all built the string with plain Python `.format()`/a bare
+  `"days"` literal. `columns.py`/`admin_fields.py` now use `ngettext` for
+  correct singular/plural selection; the Status page template now uses
+  `{% blocktrans count %}` instead of the `pluralize` filter, which handled
+  plural but not translation.
+
 ## 2026.08.30.01
 
 - Core > Clients "Token Status" column: all states now render with `font-weight: 600`

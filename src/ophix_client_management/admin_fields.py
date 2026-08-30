@@ -1,6 +1,6 @@
 from django.utils.formats import date_format
 from django.utils.html import format_html
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, ngettext
 
 from ophix_client_management.policy import token_state, STATE_LABELS
 
@@ -19,7 +19,9 @@ def token_rotation_display(self, obj):
     state, age_days = token_state(obj)
     label = STATE_LABELS[state]
     style = _STATE_STYLES[state]
-    age_str = " ({} {})".format(age_days, _("days")) if age_days is not None else ""
+    age_str = " ({})".format(
+        ngettext("%(count)d day", "%(count)d days", age_days) % {"count": age_days}
+    ) if age_days is not None else ""
     if obj.last_token_rotation:
         # Same localized DATETIME_FORMAT rendering Django uses for this field
         # when ophix-client-management isn't installed, so the two cases read

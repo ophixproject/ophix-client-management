@@ -74,7 +74,7 @@
                 </div>
             </td>
             <td class="status-cell">
-                <div class="status-label {{ row.state }}">{{ row.label }}{% if row.age_days is not None %} ({{ row.age_days }} day{{ row.age_days|pluralize }}){% endif %}</div>
+                <div class="status-label {{ row.state }}">{{ row.label }}{% if row.age_days is not None %} ({% blocktrans count counter=row.age_days %}{{ counter }} day{% plural %}{{ counter }} days{% endblocktrans %}){% endif %}</div>
             </td>
             <td class="action-cell">
                 {% if row.state == "locked" %}
