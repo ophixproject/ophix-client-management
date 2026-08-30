@@ -3,12 +3,12 @@ from django.utils.translation import gettext_lazy as _
 from ophix_client_management.policy import token_state, STATE_LABELS
 
 _STATE_STYLES = {
-    "ok":        "color: var(--admin-interface-success-color)",
-    "warn":      "color: var(--admin-interface-warning-color)",
-    "require":   "color: var(--admin-interface-alert-color)",
-    "locked":    "color: var(--admin-interface-alert-color); font-weight: bold",
-    "never":     "color: var(--admin-interface-muted-color)",
-    "requested": "color: var(--admin-interface-warning-color); font-weight: bold",
+    "ok":        "color: var(--admin-interface-success-color); font-weight: 600",
+    "warn":      "color: var(--admin-interface-warning-color); font-weight: 600",
+    "require":   "color: var(--admin-interface-alert-color); font-weight: 600",
+    "locked":    "color: var(--admin-interface-alert-color); font-weight: 600",
+    "never":     "color: var(--admin-interface-muted-color); font-weight: 600",
+    "requested": "color: var(--admin-interface-warning-color); font-weight: 600",
 }
 
 

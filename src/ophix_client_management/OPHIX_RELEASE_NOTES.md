@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+- Core > Clients "Token Status" column: all states now render with `font-weight: 600`
+  (previously only Locked/Requested were bold, so most rows looked lighter-weight
+  than the rest of the changelist).
+- Status page (`/client-management/`) table headers now match Django's own changelist
+  header styling: `font-size: 0.6875rem`, `color: var(--body-quiet-color)` (was
+  `0.85em` in the theme's module-background colour, with a separate dark-mode
+  override that's no longer needed since `--body-quiet-color` is already
+  theme/dark-mode aware).
+- Status page "Version" column: removed the `0.85em` font-size override so it
+  matches the rest of the table's text size.
+- Status page "Status" column: combined the status label and age into a single line
+  of coloured text (e.g. "Warning (14 days)"), matching the pattern used on the
+  Client change view's token section. Previously this was two stacked lines (a
+  coloured status label, then a separate muted age line below it); removed the now
+  -unused `.age-label` rule.
 - Client change view: "Last token rotation" is now a single line — the date renders
   with the same locale-aware `DATETIME_FORMAT` Django uses when ophix-client-management
   isn't installed, followed inline by the coloured status label and age (e.g.

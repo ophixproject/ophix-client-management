@@ -56,14 +56,12 @@
     text-align: left;
     padding: 0.5em 0.75em;
     border-bottom: 2px solid var(--admin-interface-module-background-color);
-    font-size: 0.85em;
+    font-size: 0.6875rem;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--admin-interface-module-background-color);
+    color: var(--body-quiet-color);
 }
 
 [data-theme="dark"] .token-table th {
-    color: var(--admin-interface-generic-link-color);
     border-bottom-color: var(--admin-interface-generic-link-color);
 }
 
@@ -120,7 +118,6 @@
 /* Status labels */
 
 .status-label {
-    font-size: 0.85em;
     font-weight: 500;
 }
 
@@ -132,17 +129,10 @@
 .status-label.never    { color: var(--admin-interface-muted-color); font-style: italic; }
 .status-label.requested { color: var(--admin-interface-warning-color); font-weight: bold; }
 
-.age-label {
-    font-size: 0.8em;
-    color: var(--admin-interface-muted-color);
-    margin-top: 2px;
-}
-
 /* Version column */
 
 .version-cell {
     font-family: monospace;
-    font-size: 0.85em;
 }
 
 .version-none {
