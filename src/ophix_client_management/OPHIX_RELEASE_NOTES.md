@@ -1,5 +1,14 @@
 # Ophix Client Management Release Notes
 
+## 2026.08.31.01
+
+- Client change view "Last token rotation" display reverted to two lines (undoing
+  the `2026.08.30.02` single-line merge) — date on top, coloured status label
+  underneath, matching the original layout. The status label is now
+  `font-weight: 600` across every state (previously only Locked/Unlocked/
+  Requested were bold), matching the same label's weight in the Token Status
+  column and Status page table.
+
 ## 2026.08.30.02
 
 - Fixed token-age text ("Warning (1 days)") always using the plural form

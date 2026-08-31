@@ -5,13 +5,13 @@ from django.utils.translation import gettext_lazy as _, ngettext
 from ophix_client_management.policy import token_state, STATE_LABELS
 
 _STATE_STYLES = {
-    "ok":        "color: var(--admin-interface-success-color)",
-    "warn":      "color: var(--admin-interface-warning-color)",
-    "require":   "color: var(--admin-interface-alert-color)",
-    "locked":    "color: var(--admin-interface-alert-color); font-weight: bold",
-    "unlocked":  "color: var(--admin-interface-warning-color); font-weight: bold",
-    "never":     "color: var(--body-quiet-color)",
-    "requested": "color: var(--admin-interface-warning-color); font-weight: bold",
+    "ok":        "color: var(--admin-interface-success-color); font-weight: 600",
+    "warn":      "color: var(--admin-interface-warning-color); font-weight: 600",
+    "require":   "color: var(--admin-interface-alert-color); font-weight: 600",
+    "locked":    "color: var(--admin-interface-alert-color); font-weight: 600",
+    "unlocked":  "color: var(--admin-interface-warning-color); font-weight: 600",
+    "never":     "color: var(--body-quiet-color); font-weight: 600",
+    "requested": "color: var(--admin-interface-warning-color); font-weight: 600",
 }
 
 
@@ -28,7 +28,7 @@ def token_rotation_display(self, obj):
         # identically aside from the appended status.
         date_str = date_format(obj.last_token_rotation, "DATETIME_FORMAT")
         return format_html(
-            '{}&nbsp;&nbsp;<span style="{}">{}{}</span>',
+            '{}<br><span style="{}">{}{}</span>',
             date_str, style, label, age_str,
         )
     return format_html('<span style="{}">{}</span>', style, label)
