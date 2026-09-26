@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _, ngettext
 from django.views.decorators.http import require_POST
 
 from ophix.core.models import Client
@@ -76,7 +77,7 @@ def client_management_view(request):
 
     context = {
         **admin.site.each_context(request),
-        "title": "Status",
+        "title": _("Status"),
         "rows": rows,
         "version_summary": version_summary,
         "warn_days": warn_days,
@@ -116,9 +117,16 @@ def request_all_overdue(request):
         last_token_rotation__isnull=True,
     ).update(rotation_required=True)
     if updated:
-        messages.success(request, f"{updated} client{'s' if updated != 1 else ''} flagged for rotation.")
+        messages.success(
+            request,
+            ngettext(
+                "%(count)d client flagged for rotation.",
+                "%(count)d clients flagged for rotation.",
+                updated,
+            ) % {"count": updated},
+        )
     else:
-        messages.info(request, "No overdue clients found.")
+        messages.info(request, _("No overdue clients found."))
     return redirect("client_management")
 
 

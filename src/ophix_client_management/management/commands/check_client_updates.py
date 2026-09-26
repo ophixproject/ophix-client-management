@@ -85,7 +85,7 @@ class Command(BaseCommand):
 
         if not packages:
             if not quiet:
-                self.stdout.write("No client packages registered yet. Clients must send the X-Ophix-Client-Package header.")
+                self.stdout.write(_("No client packages registered yet. Clients must send the X-Ophix-Client-Package header."))
             return
 
         now = timezone.now()

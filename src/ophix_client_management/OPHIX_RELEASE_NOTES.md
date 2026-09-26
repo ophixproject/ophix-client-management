@@ -1,5 +1,9 @@
 # Ophix Client Management Release Notes
 
+## 2026.09.26.02
+
+- i18n regression check: the Status dashboard page title, the rotation-flagged/no-overdue-clients admin messages, and `check_client_updates`'s "no packages registered" message were unwrapped (the rotation count also used manual pluralization instead of `ngettext`). All wrapped now, matching the file's own existing convention.
+
 ## 2026.09.26.01
 
 - Verified real compatibility under Python 3.14 (not just added the classifier) as part of the taskserver-release-wave compatibility sweep, and added `Programming Language :: Python :: 3.14` to the package classifiers.
