@@ -1,5 +1,9 @@
 # Ophix Client Management Release Notes
 
+## 2026.09.26.01
+
+- Verified real compatibility under Python 3.14 (not just added the classifier) as part of the taskserver-release-wave compatibility sweep, and added `Programming Language :: Python :: 3.14` to the package classifiers.
+
 ## 2026.08.31.01
 
 - Client change view "Last token rotation" display reverted to two lines (undoing
