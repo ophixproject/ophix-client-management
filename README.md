@@ -1,13 +1,8 @@
 # ophix-client-management
 
-Client management and token rotation policy plugin for [Ophix Project](https://ophix.io) servers.
+**Know which fleet clients need attention, before a stale token becomes a security problem.**
 
-Monitors fleet client token age, signals clients to rotate via response headers, enforces
-hard lockout once a configurable deadline passes, and tracks the client version reported by
-each fleet member.
-
-Successor to `ophix-token-policy` — identical functionality with updated naming:
-left nav section is **Client Management**, dashboard page is **Status**.
+Client tokens don't rotate themselves, and a forgotten one sitting unrotated for months (or years) is exactly the kind of thing that only surfaces during an audit — or an incident. `ophix-client-management` gives you a fleet-wide status dashboard showing every client's token age and reported software version at a glance, lets you request rotation or lock out a client directly from the admin, and enforces a hard rotation deadline automatically once you've configured one.
 
 ---
 
@@ -91,18 +86,6 @@ API call, `X-Token-Rotation-Required` is sent and `ophix-client-core` rotates th
 automatically. Normal operation resumes without any manual token handling.
 
 Clients that have never rotated (`last_token_rotation` is null) are not subject to lockout.
-
----
-
-## Migrating from ophix-token-policy
-
-1. `pip uninstall ophix-token-policy`
-2. `pip install ophix-client-management`
-3. `ophix-manage migrate`
-
-`ClientVersion` rows rebuild automatically as fleet clients make their next API call.
-Run `ophix-manage check_client_updates` to repopulate the client package version cache.
-The old `ophix_token_policy_*` DB tables are left in place and can be dropped manually.
 
 ---
 
