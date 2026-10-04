@@ -1,5 +1,14 @@
 # Ophix Client Management Release Notes
 
+## 2026.10.04.01
+
+- Reworked `README.md`'s opening with a hook-first pitch (fleet-wide token-age and
+  client-version visibility, before a stale token becomes a security problem), as part of the
+  16-package taskserver-release-wave README overhaul. Also removed the README's leftover
+  "successor to `ophix-token-policy`" framing and migration-from-`ophix-token-policy` section —
+  that package was never publicly released, so referencing it in a public README was
+  meaningless to anyone reading the repo.
+
 ## 2026.09.26.02
 
 - i18n regression check: the Status dashboard page title, the rotation-flagged/no-overdue-clients admin messages, and `check_client_updates`'s "no packages registered" message were unwrapped (the rotation count also used manual pluralization instead of `ngettext`). All wrapped now, matching the file's own existing convention.
