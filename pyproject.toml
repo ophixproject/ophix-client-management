@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ophix-client-management"
-version = "2026.10.04.01"
+version = "2026.10.09.01"
 description = "Client management and token rotation policy for Ophix Project servers"
 readme = "README.md"
 requires-python = ">=3.10"

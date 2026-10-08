@@ -1,5 +1,14 @@
 # Ophix Client Management Release Notes
 
+## 2026.10.09.01
+
+- Added `get_doc_tokens()` hook, discovered by `ophix-docs` (if installed). Contributes a
+  self-gating link pair (`cm_link_open`/`cm_link_close`) that `ophix-server-base`'s
+  `client-quickstart.md` uses to turn its "ophix-client-management" mention into a real
+  crosslink only when this plugin is actually present — the tokens are never substituted
+  (rendering blank, i.e. plain text) when the plugin isn't installed, since `ophix-docs`
+  only discovers `get_doc_tokens()` hooks from installed plugins.
+
 ## 2026.10.04.01
 
 - Reworked `README.md`'s opening with a hook-first pitch (fleet-wide token-age and
