@@ -1,6 +1,6 @@
 # Ophix Client Management Release Notes
 
-## 2026.10.09.01
+## 2026.10.08.01
 
 - Added `get_doc_tokens()` hook, discovered by `ophix-docs` (if installed). Contributes a
   self-gating link pair (`cm_link_open`/`cm_link_close`) that `ophix-server-base`'s
